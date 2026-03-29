@@ -1,0 +1,40 @@
+.login-container {
+  max-width: 22rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+.login-container h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+}
+
+.form-group input {
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-container button[type='submit'] {
+  margin-top: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.error {
+  margin-top: 1rem;
+  color: #b00020;
+  font-size: 0.875rem;
+}
