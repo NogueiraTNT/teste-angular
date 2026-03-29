@@ -12,7 +12,6 @@ export class LoginComponent {
   email = '';
   password = '';
   errorMessage = '';
-  successMessage = '';
   loading = false;
   passwordVisible = false;
 
@@ -30,15 +29,12 @@ export class LoginComponent {
       return;
     }
     this.errorMessage = '';
-    this.successMessage = '';
     this.loading = true;
 
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(this.email.trim(), this.password);
       if (result.user) {
-        console.log('Login sucesso!', result.user);
-        this.successMessage = 'Tudo certo! Redirecionando em instantes…';
-        // this.router.navigate(['/home']);
+        await this.router.navigate(['/home']);
       }
     } catch (error: unknown) {
       console.error(error);

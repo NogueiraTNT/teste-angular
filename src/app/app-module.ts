@@ -10,9 +10,10 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [App, LoginComponent],
+  declarations: [App, LoginComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

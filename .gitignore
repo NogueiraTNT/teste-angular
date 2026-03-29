@@ -29,6 +29,10 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
+# Secrets (gerado por `npm run env` a partir de `.env`)
+.env
+src/environments/environment.secrets.ts
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
