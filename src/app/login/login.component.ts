@@ -12,25 +12,39 @@ export class LoginComponent {
   email = '';
   password = '';
   errorMessage = '';
+  successMessage = '';
+  loading = false;
+  passwordVisible = false;
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
   ) {}
 
-  async onLogin() {
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  async onLogin(): Promise<void> {
+    if (this.loading) {
+      return;
+    }
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.loading = true;
+
     try {
-      const result = await this.afAuth.signInWithEmailAndPassword(this.email, this.password);
+      const result = await this.afAuth.signInWithEmailAndPassword(this.email.trim(), this.password);
       if (result.user) {
         console.log('Login sucesso!', result.user);
-        this.errorMessage = '';
-        // Aqui você redirecionaria para a home, ex:
+        this.successMessage = 'Tudo certo! Redirecionando em instantes…';
         // this.router.navigate(['/home']);
-        alert('Login realizado com sucesso! (Veja o console)');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      this.errorMessage = 'Email ou senha inválidos.';
+      this.errorMessage = 'E-mail ou senha incorretos. Verifique e tente de novo.';
+    } finally {
+      this.loading = false;
     }
   }
 }

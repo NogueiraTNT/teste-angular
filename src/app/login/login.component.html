@@ -1,15 +1,199 @@
-<div class="login-container">
-  <h2>Login RWP Motoboy</h2>
-  <form (ngSubmit)="onLogin()">
-    <div class="form-group">
-      <label>Email:</label>
-      <input type="email" [(ngModel)]="email" name="email" required>
-    </div>
-    <div class="form-group">
-      <label>Senha:</label>
-      <input type="password" [(ngModel)]="password" name="password" required>
-    </div>
-    <button type="submit">Entrar</button>
-  </form>
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-</div>
+<main
+  class="relative isolate flex min-h-dvh flex-col justify-center overflow-hidden px-4 py-10 sm:px-6 sm:py-12"
+  role="main"
+>
+  <!-- Fundo dinâmico: gradiente + orbs (mobile-first, leve) -->
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-slate-950 via-violet-950/95 to-slate-900"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="pointer-events-none absolute -left-1/4 top-0 -z-10 h-[min(70vh,28rem)] w-[min(100vw,28rem)] rounded-full bg-fuchsia-500/25 blur-3xl motion-safe:animate-pulse"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="pointer-events-none absolute -right-1/4 bottom-0 -z-10 h-[min(60vh,24rem)] w-[min(90vw,24rem)] rounded-full bg-cyan-400/20 blur-3xl motion-safe:animate-pulse motion-safe:[animation-delay:1.5s]"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="mx-auto w-full max-w-sm motion-safe:animate-login-enter motion-reduce:animate-none"
+  >
+    <!-- Marca + contexto -->
+    <header class="mb-6 text-center sm:mb-8">
+      <div
+        class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 shadow-lg ring-1 ring-white/20 backdrop-blur-md transition-transform hover:scale-105 motion-safe:duration-300"
+        aria-hidden="true"
+      >
+        <svg
+          class="h-8 w-8 shrink-0 text-amber-300"
+          width="32"
+          height="32"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.036m11.14 0H9m3 0h3M3.75 3.89v8.25a2.25 2.25 0 002.25 2.25h14.5a2.25 2.25 0 002.25-2.25V9.75a2.25 2.25 0 00-2.25-2.25h-6.75V4.5A2.25 2.25 0 0012 2.25a2.25 2.25 0 00-2.25 2.25V7.5H3A2.25 2.25 0 00.75 9.75v2.25z"
+          />
+        </svg>
+      </div>
+      <h1 id="login-title" class="text-balance text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        Login RWP Motoboy
+      </h1>
+      <p class="mt-2 text-pretty text-sm leading-relaxed text-white/75 sm:text-base">
+        Bem-vindo de volta. Entre com seu e-mail e senha para acessar sua área.
+      </p>
+    </header>
+
+    <!-- Card estilo shadcn: borda, sombra, vidro -->
+    <section
+      class="rounded-2xl border border-white/10 bg-card/95 p-6 shadow-2xl shadow-black/25 ring-1 ring-white/10 backdrop-blur-xl supports-[backdrop-filter]:bg-card/80 sm:p-8"
+      aria-labelledby="login-title"
+    >
+      <form
+        (ngSubmit)="onLogin()"
+        class="space-y-5"
+        [attr.aria-busy]="loading"
+        novalidate
+      >
+        <!-- E-mail -->
+        <div class="space-y-2">
+          <label for="login-email" class="text-sm font-medium leading-none text-card-foreground">
+            E-mail
+          </label>
+          <div class="relative">
+            <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true">
+              <svg class="h-4 w-4 shrink-0" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+              </svg>
+            </span>
+            <input
+              id="login-email"
+              type="email"
+              name="email"
+              [(ngModel)]="email"
+              required
+              autocomplete="email"
+              inputmode="email"
+              [disabled]="loading"
+              [attr.aria-invalid]="errorMessage ? true : null"
+              [attr.aria-describedby]="errorMessage ? 'login-error' : null"
+              placeholder="voce@exemplo.com"
+              class="flex h-11 w-full rounded-lg border border-input bg-background pl-10 pr-3 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-60"
+            />
+          </div>
+        </div>
+
+        <!-- Senha + mostrar/ocultar -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <label for="login-password" class="text-sm font-medium leading-none text-card-foreground">
+              Senha
+            </label>
+            <button
+              type="button"
+              class="text-xs font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-pressed]="passwordVisible"
+              [attr.aria-label]="passwordVisible ? 'Ocultar senha' : 'Mostrar senha'"
+            >
+              {{ passwordVisible ? 'Ocultar' : 'Mostrar' }}
+            </button>
+          </div>
+          <div class="relative">
+            <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true">
+              <svg class="h-4 w-4 shrink-0" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+            </span>
+            <input
+              id="login-password"
+              [type]="passwordVisible ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="password"
+              required
+              autocomplete="current-password"
+              [disabled]="loading"
+              [attr.aria-invalid]="errorMessage ? true : null"
+              placeholder="••••••••"
+              class="flex h-11 w-full rounded-lg border border-input bg-background pl-10 pr-3 text-sm text-foreground shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-60"
+            />
+          </div>
+        </div>
+
+        <!-- Feedback erro -->
+        <div
+          *ngIf="errorMessage"
+          id="login-error"
+          role="alert"
+          class="flex gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-sm text-destructive motion-safe:animate-shake motion-reduce:animate-none"
+        >
+          <svg class="mt-0.5 h-4 w-4 shrink-0" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+          </svg>
+          <span>{{ errorMessage }}</span>
+        </div>
+
+        <!-- Feedback sucesso -->
+        <div
+          *ngIf="successMessage"
+          role="status"
+          class="flex gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-sm text-emerald-800"
+        >
+          <svg class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{{ successMessage }}</span>
+        </div>
+
+        <!-- CTA -->
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="group relative inline-flex h-11 w-full items-center justify-center gap-2 overflow-hidden rounded-lg bg-primary text-sm font-semibold text-primary-foreground shadow-md transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-60 active:scale-[0.98] motion-safe:duration-150"
+        >
+          <span *ngIf="loading" class="inline-flex items-center gap-2" aria-live="polite">
+            <svg
+              class="h-4 w-4 shrink-0 animate-spin motion-reduce:animate-none"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Entrando…
+          </span>
+          <span *ngIf="!loading" class="inline-flex items-center gap-2">
+            Entrar
+            <svg class="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </span>
+        </button>
+
+        <p class="text-center text-xs text-muted-foreground">
+          Ao entrar, você confirma que leu nossas práticas de segurança. Precisa de ajuda?
+          <button
+            type="button"
+            class="font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+          >
+            Fale com o suporte
+          </button>
+        </p>
+      </form>
+    </section>
+
+    <p class="mt-8 text-center text-xs text-white/50">
+      © RWP Motoboy — área restrita a usuários autorizados
+    </p>
+  </div>
+</main>
