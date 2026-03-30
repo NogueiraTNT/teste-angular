@@ -21,7 +21,14 @@
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
           <path
             class="opacity-75"
             fill="currentColor"
@@ -47,9 +54,13 @@
       aria-hidden="true"
     ></div>
 
-    <div class="mx-auto w-full max-w-2xl motion-safe:animate-login-enter motion-reduce:animate-none">
+    <div
+      class="mx-auto w-full max-w-2xl motion-safe:animate-login-enter motion-reduce:animate-none"
+    >
       <div class="mb-8 text-center">
-        <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">Área interna</p>
+        <p class="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+          Área interna
+        </p>
         <h1 class="text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl">
           Hello World
         </h1>
@@ -70,7 +81,14 @@
             viewBox="0 0 24 24"
             aria-hidden="true"
           >
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
             <path
               class="opacity-75"
               fill="currentColor"
@@ -98,7 +116,10 @@
       </div>
 
       <!-- Lista de documentos -->
-      <section *ngIf="!loadingDados() && !semUsuarioAuth() && !loadError()" aria-labelledby="dados-heading">
+      <section
+        *ngIf="!loadingDados() && !semUsuarioAuth() && !loadError()"
+        aria-labelledby="dados-heading"
+      >
         <h2 id="dados-heading" class="sr-only">Registros do banco</h2>
 
         <p
@@ -113,7 +134,9 @@
             <article
               class="rounded-xl border border-zinc-800/90 bg-zinc-950/70 p-4 shadow-lg shadow-black/20 backdrop-blur-sm sm:p-5"
             >
-              <p class="mb-3 text-xs font-medium uppercase tracking-wider text-zinc-500">Documento</p>
+              <p class="mb-3 text-xs font-medium uppercase tracking-wider text-zinc-500">
+                Documento
+              </p>
               <p class="mb-4 break-all font-mono text-sm text-zinc-200">{{ doc.id }}</p>
               <dl class="divide-y divide-zinc-800/90">
                 <ng-container *ngFor="let kv of doc | keyvalue">
@@ -122,7 +145,9 @@
                     class="flex flex-col gap-1 py-3 first:pt-0 last:pb-0 sm:flex-row sm:items-start sm:justify-between sm:gap-4"
                   >
                     <dt class="shrink-0 text-xs font-medium text-zinc-500">{{ kv.key }}</dt>
-                    <dd class="min-w-0 break-words text-sm text-zinc-200 sm:text-right">{{ formatCampo(kv.value) }}</dd>
+                    <dd class="min-w-0 break-words text-sm text-zinc-200 sm:text-right">
+                      {{ formatCampo(kv.value) }}
+                    </dd>
                   </div>
                 </ng-container>
               </dl>
@@ -131,5 +156,16 @@
         </ul>
       </section>
     </div>
+
+    <h1>Teste Pai se comunica com o Filho</h1>
+    <app-store-card
+      *ngFor="let loja of listaDeLojas"
+      [nomeDaLoja]="loja"
+      (lojaSelecionada)="selecionarLoja($event)"
+    ></app-store-card>
+
+    <p>
+      Loja que você escolheu: <strong>{{ escolhaAtual }}</strong>
+    </p>
   </main>
 </div>

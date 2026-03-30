@@ -3,7 +3,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { catchError, map, of, switchMap } from 'rxjs';
-
 import { Database } from '../services/database';
 
 export type UsuarioDoc = Record<string, unknown> & { id: string };
@@ -20,6 +19,14 @@ export class HomeComponent {
   readonly loadError = signal<string | null>(null);
   readonly semUsuarioAuth = signal(false);
   readonly signingOut = signal(false);
+
+  listaDeLojas = ['Loja 1', 'Loja 2', 'Loja 3', 'Loja 4', 'Loja 5'];
+  escolhaAtual = 'Nenhuma';
+
+  selecionarLoja(nome: string) {
+    this.escolhaAtual = nome;
+    console.log('Loja selecionada:', nome);
+  }
 
   constructor(
     private afAuth: AngularFireAuth,

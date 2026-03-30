@@ -11,10 +11,11 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { StoreCardComponent } from './storecard/store-card.component';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
-  declarations: [App, LoginComponent, HomeComponent],
+  declarations: [App, LoginComponent, HomeComponent, StoreCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
