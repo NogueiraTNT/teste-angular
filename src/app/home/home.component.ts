@@ -7,6 +7,20 @@ import { Database } from '../services/database';
 
 export type UsuarioDoc = Record<string, unknown> & { id: string };
 
+export type TarefaDoc = { id: string; titulo: string; etapa: string };
+
+/** Dados fictícios para o quadro de etapas (substituir por Firestore quando quiser). */
+const TAREFAS_MOCK: TarefaDoc[] = [
+  { id: 'm1', titulo: 'Enviar documento para assinatura', etapa: 'assinatura' },
+  { id: 'm2', titulo: 'Validar identidade do cliente', etapa: 'assinatura' },
+  { id: 'm3', titulo: 'Revisar cláusulas do contrato', etapa: 'assinatura' },
+  { id: 'm4', titulo: 'Aprovar minuta jurídica', etapa: 'assinatura' },
+  { id: 'm5', titulo: 'Emitir boleto / PIX', etapa: 'assinatura' },
+  { id: 'm6', titulo: 'Confirmar recebimento', etapa: 'assinatura' },
+  { id: 'm7', titulo: 'Agendar entrega', etapa: 'assinatura' },
+  { id: 'm8', titulo: 'Conferência final com o cliente', etapa: 'assinatura' },
+];
+
 @Component({
   selector: 'app-home',
   standalone: false,
@@ -20,13 +34,9 @@ export class HomeComponent {
   readonly semUsuarioAuth = signal(false);
   readonly signingOut = signal(false);
 
-  listaDeLojas = ['Loja 1', 'Loja 2', 'Loja 3', 'Loja 4', 'Loja 5'];
-  escolhaAtual = 'Nenhuma';
-
-  selecionarLoja(nome: string) {
-    this.escolhaAtual = nome;
-    console.log('Loja selecionada:', nome);
-  }
+  readonly etapas = signal<string[]>(['assinatura', 'contrato', 'pagamento', 'entrega']);
+  readonly etapaAtiva = signal<string>(this.etapas()[0]);
+  readonly tarefas = signal<TarefaDoc[]>(TAREFAS_MOCK);
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -79,6 +89,37 @@ export class HomeComponent {
       });
   }
 
+  tarefasNaEtapa(etapa: string): TarefaDoc[] {
+    return this.tarefas().filter((t) => t.etapa === etapa);
+  }
+
+  /** Indica se `etapa` já é a última da ordem (não há próximo passo). */
+  ultimaEtapa(etapa: string): boolean {
+    const ordem = this.etapas();
+    const i = ordem.indexOf(etapa);
+    return i < 0 || i >= ordem.length - 1;
+  }
+
+  /** Move a tarefa para a próxima etapa na ordem definida em `etapas`. */
+  avancarEtapa(tarefaId: string): void {
+    const ordem = this.etapas();
+    this.tarefas.update((lista) => {
+      const idx = lista.findIndex((x) => x.id === tarefaId);
+      if (idx === -1) return lista;
+      const t = lista[idx];
+      const iEtapa = ordem.indexOf(t.etapa);
+      if (iEtapa < 0 || iEtapa >= ordem.length - 1) return lista;
+      const proxima = ordem[iEtapa + 1];
+      const copia = [...lista];
+      copia[idx] = { ...t, etapa: proxima };
+      return copia;
+    });
+  }
+
+  selecionarEtapa(etapa: string) {
+    this.etapaAtiva.set(etapa);
+  }
+
   formatCampo(val: unknown): string {
     if (val === null || val === undefined) return '—';
     if (typeof val === 'object') return JSON.stringify(val);
@@ -87,6 +128,10 @@ export class HomeComponent {
 
   trackById(_index: number, doc: UsuarioDoc): string {
     return doc.id;
+  }
+
+  trackByTarefaId(_index: number, t: TarefaDoc): string {
+    return t.id;
   }
 
   async logout(): Promise<void> {
