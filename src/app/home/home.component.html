@@ -53,7 +53,7 @@
       class="pointer-events-none fixed left-1/2 top-1/4 -z-10 h-[min(50vh,20rem)] w-[min(90vw,24rem)] -translate-x-1/2 rounded-full bg-zinc-500/10 blur-3xl"
       aria-hidden="true"
     ></div>
-
+    <!--
     <div
       class="mx-auto w-full max-w-6xl motion-safe:animate-login-enter motion-reduce:animate-none"
     >
@@ -81,9 +81,10 @@
         </div>
 
         <p class="mb-4 text-sm text-zinc-400">
-          Etapa em foco: <strong class="text-zinc-200">{{ etapaAtiva() }}</strong> — tarefas de exemplo (dados fixos no
-          código); cada coluna mostra só itens cuja <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">etapa</code> bate
-          com o nome da coluna.
+          Etapa em foco: <strong class="text-zinc-200">{{ etapaAtiva() }}</strong> — tarefas de
+          exemplo (dados fixos no código); cada coluna mostra só itens cuja
+          <code class="rounded bg-zinc-800 px-1 py-0.5 text-xs">etapa</code> bate com o nome da
+          coluna.
         </p>
 
         <div
@@ -95,9 +96,13 @@
             class="flex min-w-[min(100%,16rem)] max-w-xs flex-1 flex-col rounded-xl border border-zinc-700/80 bg-zinc-900/60 p-3 shadow-lg"
             role="listitem"
           >
-            <h2 class="mb-3 border-b border-zinc-700 pb-2 text-sm font-semibold capitalize text-zinc-200">
+            <h2
+              class="mb-3 border-b border-zinc-700 pb-2 text-sm font-semibold capitalize text-zinc-200"
+            >
               {{ etapa }}
-              <span class="ml-1 text-xs font-normal text-zinc-500">({{ tarefasNaEtapa(etapa).length }})</span>
+              <span class="ml-1 text-xs font-normal text-zinc-500"
+                >({{ tarefasNaEtapa(etapa).length }})</span
+              >
             </h2>
             <ul class="flex flex-col gap-2">
               <li
@@ -128,6 +133,15 @@
             </ul>
           </section>
         </div>
+      </div>
+    </div> -->
+
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold">Calculadora de Preço</h2>
+      <p class="text-gray-600">Calculadora de preço para o projeto.</p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-calc></app-calc>
       </div>
     </div>
   </main>
