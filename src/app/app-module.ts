@@ -15,8 +15,17 @@ import { StoreCardComponent } from './storecard/store-card.component';
 import { EtapasWorkComponent } from './etapas-work/etapas-work.component';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
+import { CalcComponent } from './calc/calc.component';
+
 @NgModule({
-  declarations: [App, LoginComponent, HomeComponent, StoreCardComponent, EtapasWorkComponent],
+  declarations: [
+    App,
+    LoginComponent,
+    HomeComponent,
+    StoreCardComponent,
+    EtapasWorkComponent,
+    CalcComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
