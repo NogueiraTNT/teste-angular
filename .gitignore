@@ -33,6 +33,9 @@ yarn-error.log
 .env
 src/environments/environment.secrets.ts
 
+# Chave de service account (Admin SDK) — nunca versionar; use GitHub Secret no CI
+*-firebase-adminsdk-*.json
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
